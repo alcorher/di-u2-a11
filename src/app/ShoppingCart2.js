@@ -25,12 +25,28 @@ export default function ShoppingCart() {
       if (product.id === productId) {
         return {
           ...product,
+          
           count: product.count + 1
         };
       } else {
         return product;
       }
     }))
+  }
+
+  function handleDecreaseClick(productId) {
+    let newProducts = products.map(product => {
+      if (product.id === productId && product.count > 0) {
+        return {
+          ...product,
+          count: product.count - 1
+        };
+      } else {
+        return product;
+      }
+    })
+    const listaFinal = newProducts.filter(product => product.count > 0);
+    setProducts(listaFinal);
   }
 
   return (
@@ -45,7 +61,9 @@ export default function ShoppingCart() {
           }}>
             +
           </button>
-          <button>
+          <button onClick={() => {
+            handleDecreaseClick(product.id)
+          }}>
             –
           </button>
         </li>
